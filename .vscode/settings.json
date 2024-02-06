@@ -42,5 +42,6 @@
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
+    "workbench.colorTheme": "Visual Studio Dark",
     
 }

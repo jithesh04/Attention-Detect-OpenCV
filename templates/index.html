@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/calvier" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+        <script defer>
+            setInterval(()=>{
+                fetch('/value1').then((res)=>{
+                let x = res.json().then(data => {
+                        const jsonDataDisplayElement = document.getElementById('slots1');
+                        jsonDataDisplayElement.innerHTML = JSON.stringify(data.value, null, 2);
+                    })
+            }) 
+            },1000)
+            setInterval(()=>{
+                fetch('/value2').then((res)=>{
+                let x = res.json().then(data => {
+                        const jsonDataDisplayElement = document.getElementById('slots2');
+                        jsonDataDisplayElement.innerHTML = JSON.stringify(data.value, null, 2);
+                    })
+            }) 
+            },1000)
+            
+        </script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Bungee&display=swap');
+    *{
+    margin: 0;
+}
+#body{
+    background-image: url("/static/camera22.jpeg");
+    background-size: cover;
+
+}
+#title1{
+    display: flex;
+  align-items: center;
+  justify-content: center
+}
+a {
+  max-width: 100%;
+  max-height:100%;
+}
+
+#park{
+    width:40px;
+    height:40px;
+    float: left;
+    border-style:solid;
+    border-width: 5px;
+    border-color:#fff;
+    margin-left: 10px;
+    margin-top: -10px;
+}
+#title{
+    color:#f07c07;
+    padding-left: 50px;
+    font-family: "Bungee";
+    letter-spacing: 3px;
+    font-size: 40px;
+}
+#header{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+  
+    padding-left: 20px;
+    padding-top: 10px;
+}
+#logo{
+    width: 90px;
+    height:70px;
+}
+.mainContainer{
+
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+    position: fixed;
+
+
+}
+#head{
+    color:white;
+    padding:10px;
+    font-size: 30px;
+    float: left;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.levels{
+    width: 20vw;
+    height: 60vh;
+    background-color:#0099ff;
+    display: flex;
+    flex-direction: column;
+    border-color: white;
+    border-width:10px;
+    border-radius: 10px;
+    border-style: double;
+
+}
+#level1_text{
+    font-size: 30px;
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#slots1{
+    font-size: 40px;
+    color:red;
+    background-color: #000;
+    width:130px;
+    height:30px;
+    font-family: "Orbitron";
+    text-align: center;
+    padding:10px;
+    padding-bottom:20px;
+    border-radius: 10px;
+}
+#level2_text{
+    font-size: 30px;
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#slots2{
+    font-size: 40px;
+    color:red;
+    background-color: #000;
+    width:130px;
+    height:30px;
+    font-family: "Orbitron";
+    text-align: center;
+    padding:10px;
+    padding-bottom:20px;
+    border-radius: 10px;
+}
+#level3_text{
+    font-size: 30px;
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#slots3{
+    font-size: 40px;
+    color:red;
+    background-color: #000;
+    width:130px;
+    height:30px;
+    font-family: "Orbitron";
+    text-align: center;
+    padding:10px;
+    padding-bottom:20px;
+    border-radius: 10px;
+}
+#level2{
+    text-align: center;
+    font-size: 30px;
+    color: #000;    
+    background-color: #0099ff;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+
+}
+#level3{
+    text-align: center;
+    font-size: 30px;
+    color: #000;    
+    background-color: #0099ff;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.levelHighlight{
+    text-align: center;
+    font-size: 30px;
+    color: #000;    
+    background-color: #0099ff;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+
+}
+
+.imgContainer{
+    width: 40vw;
+    height: 60vh;
+   
+    border-radius: 20px;
+
+
+}
+
+#n1{
+    color: aliceblue;
+    padding-left:500px;
+    font-size:larger;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+#n2{
+    color: aliceblue;
+    padding-left:50px;
+    font-size:larger;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+#n3{
+    color: aliceblue;
+    padding-left:50px;
+    font-size:larger;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+#n1:hover{
+    color:#0099ff;
+}
+#n2:hover{
+    color:#0099ff;
+}
+#n3:hover{
+    color:#0099ff;
+}
+
+
+
+.imgInnerContainer{
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    margin-top: -5px;
+    position: relative;
+}
+
+.img1 {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 15px;
+    transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    border-style: groove;
+    border-width: 10px;
+    border-color:#f07c07;
+}
+#footer ul {
+    display: flex;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#footer ul li {
+    list-style: none;
+}
+
+#footer ul li a {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    display: block;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid #fff;
+    z-index: 1;
+}
+
+#footer ul li a .icon {
+    position: relative;
+    color: #262626;
+    transition: .5s;
+margin-top:20%;
+    z-index: 3;
+}
+
+#footer ul li a:hover .icon {
+    color: #fff;
+    transform: rotateY(360deg);
+}
+
+#footer ul li a:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f00;
+    transition: .5s;
+    z-index: 2;
+}
+
+#footer ul li a:hover:before {
+    top: 0;
+}
+
+#footer ul li:nth-child(1) a:before {
+    background: #3b5999;
+}
+
+#footer ul li:nth-child(2) a:before {
+    background: #55acee;
+}
+
+#footer ul li:nth-child(3) a:before {
+    background: #0077b5;
+}
+
+#footer ul li:nth-child(4) a:before {
+    background: #dd4b39;
+}
+</style>
+<body id="body">
+    <div id="main" >
+        <div id="header">
+            <img id="logo" src="static/logo11.png"/>
+            <h1 id="title">SpotScholar</h1>
+            <h1 id="n1">HOME</h1>
+            <h1 id="n2">ABOUT</h1>
+            <h1 id="n3">CONTACT</h1>
+        </div>
+            <div class="mainContainer">
+                <div class="levels">
+                    <div id="title1">
+                        <div id="a">
+                            <img id="park" src="static/unnamed.png"/> 
+                        </div>
+                        <div id="b">
+                            <h1 id="head">List of Students</h1>
+                        </div>
+                    </div>
+
+                              
+                    
+                    <div id="level1" class="levelHighlight">
+                        <h1 id="level1_text">Attentive</h1>
+                        <div>
+                            <h1 id="slots1">10</h1>
+                        </div>
+                    </div>
+                    <div id="level2">
+                        <h1 id="level2_text">Un-Attentive</h1>
+                        <div>
+                            <h1 id="slots2">10</h1>
+                        </div>
+                    </div>
+    
+                </div >
+                <div class="imgContainer">
+                    <img id="image1" src="{{ url_for('video_feed1') }}" class="img1">
+                </div>
+            </div>
+            <div id="footer">
+                <ul>
+              <li>
+                  <a href="#"><i class="fab fa-facebook-f icon"></i></a>
+              </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <li>
+                  <a href="#"><i class="fab fa-twitter icon"></i></a>
+              </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <li>
+                  <a href="#"><i class="fab fa-linkedin-in icon"></i></a>
+              </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <li>
+                  <a href="#"><i class="fab fa-google-plus-g icon"></i></a>
+              </li>
+          </ul>
+      </div>
+    </div>
+    
+</body>
+</html>
