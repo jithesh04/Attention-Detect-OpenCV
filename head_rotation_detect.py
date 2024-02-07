@@ -4,12 +4,9 @@ import dlib as dlib
 import math
 
 from HistoryDict import *
-# 將特徵點的座標轉成陣列
 def shape_to_np(shape, dtype = "int"):
-	# initialize the list of (x, y)-coordinates
 	coords = np.zeros((68, 2), dtype = dtype)
-	# loop over the 68 facial landmarks and convert them
-	# to a 2-tuple of (x, y)-coordinates
+
 	for i in range(0, 68):
 		coords[i] = (shape.part(i).x, shape.part(i).y)
 	# return the list of (x, y)-coordinates
@@ -121,12 +118,12 @@ def head_pose_points(img, rotation_vector, translation_vector, camera_matrix):
     return (x, y)
     
 
-# 建立人臉偵測
+
 FACE_DETECTOR = dlib.get_frontal_face_detector()
-# 建立人臉細節偵測
+
 FACE_PREDICTOR = dlib.shape_predictor('model/shape_predictor_68_face_landmarks.dat')
 
-# 建立臉部 3D 模型位置.
+
 FACE_3D_MODEL_POINT = np.array([
                             (0.0, 0.0, 0.0),             # Nose tip
                             (0.0, -330.0, -65.0),        # Chin
@@ -136,7 +133,7 @@ FACE_3D_MODEL_POINT = np.array([
                             (150.0, -150.0, -125.0)      # Right mouth corner
                         ], dtype='double')
 
-# 攝像頭
+
 WEBCAM = cv2.VideoCapture(0)
 WEBCAM.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
 WEBCAM.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -146,7 +143,7 @@ size = img.shape
 
 
 
-# 取得鏡頭焦距
+
 focal_length = size[1]
 center = (size[1]/2, size[0]/2)
 CAMERA_MATRIX = np.array(
@@ -181,14 +178,12 @@ def get_angles_eular(rvec, tvec):
 
 def get_angles_gerneal(image_points, rvec, tvec):
     dist_coeffs = np.zeros((4,1)) # Assuming no lens distortion
-    # 將 3D 座標點，投影至 2D 圖片面板上
+
     (nose_end_point2D, jacobian) = cv2.projectPoints(np.array([(0.0, 0.0, 1000.0)]), rvec, tvec, CAMERA_MATRIX, dist_coeffs, cv2.SOLVEPNP_AP3P)
 
-    # --------------------------------------------------------------------------------------
-    # 取得垂直角度
-    # 取得鼻尖座標 (臉部直接投影位置)
+ 
     p1 = ( int(image_points[0][0]), int(image_points[0][1]))
-    # 取得鼻尖座標 (臉部 3D 投影後的座標)
+
     p2 = ( int(nose_end_point2D[0][0][0]), int(nose_end_point2D[0][0][1]))
 
     cv2.line(img, p1, p2, (0, 255, 0), 2)
@@ -200,7 +195,6 @@ def get_angles_gerneal(image_points, rvec, tvec):
     
     # cv2.putText(img, str(vertical_angle), tuple(p1), font, 2, (128, 255, 255), 3)
     # --------------------------------------------------------------------------------------
-    # 取得水平角度
     x1, x2 = head_pose_points(img, rvec, tvec, CAMERA_MATRIX)
 
     cv2.line(img, tuple(x1), tuple(x2), (255, 255, 0), 2)
@@ -228,26 +222,23 @@ def detect(show3D = True, showFaceMark = True):
 
     vertical_angle = 0
     horizon_angle  = 0
-    # 讀取攝像頭圖片
     ret, img = WEBCAM.read()
 
     if ret == True:
         # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # 轉成灰階圖
-        # 開始判斷人臉
-        faces = FACE_DETECTOR(img, 0) # 取得人臉
+        faces = FACE_DETECTOR(img, 0)
         
 
-        for face in faces:       # 取得多張人臉
+        for face in faces:      
 
             (x, y, w, h) = rect_to_bb(face)
             # cv2.rectangle(img,(x, y),(x + w, y + h),(255,0,0),2)
 
-            marks = FACE_PREDICTOR(img, face)    # 使用 dlib 模型，將臉部位置標記出
+            marks = FACE_PREDICTOR(img, face)   
             marks = shape_to_np(marks)
 
             # mark_detector.draw_marks(img, marks, color=(0, 255, 0))
 
-            # 儲存 dlib 標記結果取平均，讓整體更滑順
             landmark = [marks[30], marks[8], marks[36], marks[45], marks[48], marks[54]]
             Dib_History.add( landmark )
             if( Dib_History.is_full() ):
@@ -255,25 +246,22 @@ def detect(show3D = True, showFaceMark = True):
                 Dib_History.pop()
 
 
-            # 建立特徵點陣列 (點由 Dlib 產生)
             image_points = np.array([
-                                    landmark[0],     # 取得鼻尖點
-                                    landmark[1],      # 取得下巴點
-                                    landmark[2],     # 取得左眼左眼角
-                                    landmark[3],     # 取得右眼右眼角
-                                    landmark[4],     # 取得左嘴角
-                                    landmark[5]      # 取得右嘴角
+                                    landmark[0],     
+                                    landmark[1],     
+                                    landmark[2],     
+                                    landmark[3],     
+                                    landmark[4],   
+                                    landmark[5]    
                                 ], 
                                 dtype='double')
 
 
 
             dist_coeffs = np.zeros((4,1)) # Assuming no lens distortion
-            # 取得在 3D 投影至 2D 畫面時的座標運算，用來計算 3D 位置標定的移動情況
             (success, rotation_vector, translation_vector) = cv2.solvePnP(FACE_3D_MODEL_POINT, image_points, CAMERA_MATRIX, dist_coeffs)
             
 
-            # 儲存 pnp 運算結果取平均，讓整體更滑順
             Pnp_History.add( [rotation_vector, translation_vector] )
             if( Pnp_History.is_full() ):
                 [rotation_vector, translation_vector] = Pnp_History.get_average()
@@ -285,20 +273,16 @@ def detect(show3D = True, showFaceMark = True):
             # We use this to draw a line sticking out of the nose
             
 
-            # 將臉部的點標記出至圖片上
             if( showFaceMark ):
                 for p in image_points:
                     cv2.circle(img, (int(p[0]), int(p[1])), 3, (0,0,255), -1)
             
             (horizon_angle, vertical_angle) = get_angles_gerneal(image_points, rotation_vector, translation_vector) 
 
-        # 顯示影像
         # cv2.imshow('img', img)
 
-    # 回傳角度以及圖片
     return (horizon_angle, vertical_angle, img)
 
-# 頭部方向
 NONE    = 0
 LEFT    = 1
 RIGHT   = 2
@@ -306,7 +290,6 @@ UP      = 3
 DOWN    = 4
 GONE    = 5
 
-# 判斷頭部目前的轉向
 def judge_look(horizon_angle, vertical_angle, horizon_threshold, vertical_threshold):
     head_direction      = 0
     head_direction_str  = ['      ','      '] 

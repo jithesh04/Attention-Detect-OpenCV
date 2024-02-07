@@ -2,7 +2,7 @@ import cv2
 import dlib
 import numpy as np
 
-# 用來顯示的函示庫
+
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg 
 
@@ -14,7 +14,7 @@ detector_params.filterByArea = True
 detector_params.maxArea = 1500
 detector = cv2.SimpleBlobDetector_create(detector_params)
 
-# 臉部偵測
+
 def detect_faces(img, cascade):
     gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     coords = cascade.detectMultiScale(gray_frame, 1.3, 5)
@@ -90,7 +90,6 @@ def main():
 
             for eye in eyes:
 
-                # 判斷是否有找到眼睛
                 if eye is not None:
                     threshold = r = cv2.getTrackbarPos('threshold', 'image')
                     eye = cut_eyebrows(eye)
@@ -100,7 +99,6 @@ def main():
 
         cv2.imshow('image', frame)
 
-        # 離開迴圈，關閉攝影機
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
