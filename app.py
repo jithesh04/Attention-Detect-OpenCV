@@ -9,7 +9,7 @@ import cv2
 import pickle
 import numpy as np
 import os
-from main import updatedValues1,iterate_video_frames,updatedValues2
+from main import updatedValues1,updatedValues2
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory = "static"), name = "static")
@@ -19,14 +19,10 @@ templates = Jinja2Templates(directory="templates")
 def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get('/video_feed1')
-def video_feed1():
-    return StreamingResponse(iterate_video_frames("video1.mp4"), media_type='multipart/x-mixed-replace; boundary=frame')
-
-
 @app.get('/value1')
 def values1():
     data = {"value":updatedValues1()}
+    
     return JSONResponse(content=data)
 @app.get('/value2')
 def values2():
